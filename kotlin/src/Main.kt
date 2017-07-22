@@ -11,7 +11,11 @@ fun main(args: Array<String>) {
                     width = "6cm",
                     height = "5cm",
                     viewbox = "0 0 600 500") {
-
+                path(
+                        Point(0, 0),
+                        Point(0, 100),
+                        Point(100, 0)
+                )
             }
         }
     }
