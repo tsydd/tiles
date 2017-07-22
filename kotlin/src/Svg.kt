@@ -46,3 +46,24 @@ fun PrintWriter.hexagon(center: Point,
 
     path(points)
 }
+
+fun PrintWriter.tileWithHexagons(offset: Point,
+                                 radius: Position,
+                                 interval: Position,
+                                 rows: Int,
+                                 cols: Int) {
+    val a = radius * Math.sin(Math.PI / 3)
+    val dx = (a * 2 + interval) * Math.sin(Math.PI / 3)
+    val dy = (a * 2 + interval) * Math.cos(Math.PI / 3)
+
+    (0..cols).forEach { numY ->
+        val offsetY = dy * 2 * numY + offset.y
+        (0..rows).forEach { numX ->
+            val offsetX = dx * 2 * numX + offset.x
+            hexagon(
+                    Point(offsetX, offsetY),
+                    radius
+            )
+        }
+    }
+}
