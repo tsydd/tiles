@@ -16,6 +16,10 @@ fun main(args: Array<String>) {
                         Point(0, 100),
                         Point(100, 0)
                 )
+                hexagon(
+                        Point(100, 100),
+                        100.0
+                )
             }
         }
     }

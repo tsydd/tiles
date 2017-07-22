@@ -5,15 +5,6 @@ import java.io.PrintWriter
  * @since: 21.07.2017.
  */
 
-typealias Position = Double
-
-data class Point(
-        val x: Position,
-        val y: Position
-) {
-    constructor(x: Int, y: Int) : this(x.toDouble(), y.toDouble())
-}
-
 fun PrintWriter.xml(body: PrintWriter.() -> Unit) {
     println("""<?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -31,7 +22,7 @@ fun PrintWriter.svg(width: String,
     println("""</svg>""")
 }
 
-fun PrintWriter.path(vararg points: Point) {
+fun PrintWriter.path(points: Sequence<Point>) {
     val midPart = points.asSequence()
             .drop(1)
             .map { "L ${it.x} ${it.y}" }
@@ -40,4 +31,18 @@ fun PrintWriter.path(vararg points: Point) {
     val d = "M ${points.first().x} ${points.first().y} $midPart z"
 
     println("""<path d="$d" fill="red" stroke="blue"/>""")
+}
+
+fun PrintWriter.path(vararg points: Point) {
+    path(points.asSequence())
+}
+
+fun PrintWriter.hexagon(center: Point,
+                        radius: Position,
+                        rotate: Double = 0.0) {
+    val points = generateSequence(rotate) { it + Math.PI / 3 }
+            .map { it.toPoint() * radius + center }
+            .take(6)
+
+    path(points)
 }
