@@ -30,7 +30,7 @@ fun PrintWriter.path(points: Sequence<Point>) {
 
     val d = "M ${points.first().x} ${points.first().y} $midPart z"
 
-    println("""<path d="$d" fill="red" stroke="blue"/>""")
+    println("""<path d="$d" fill="none" stroke="blue"/>""")
 }
 
 fun PrintWriter.path(vararg points: Point) {
@@ -56,10 +56,13 @@ fun PrintWriter.tileWithHexagons(offset: Point,
     val dx = (a * 2 + interval) * Math.sin(Math.PI / 3)
     val dy = (a * 2 + interval) * Math.cos(Math.PI / 3)
 
-    (0..cols).forEach { numY ->
-        val offsetY = dy * 2 * numY + offset.y
-        (0..rows).forEach { numX ->
-            val offsetX = dx * 2 * numX + offset.x
+    (0..cols).forEach { numX ->
+        val offsetX = dx * numX + offset.x
+        (0..rows).forEach { numY ->
+            var offsetY = dy * 2 * numY + offset.y
+            if (numX % 2 == 1) {
+                offsetY += dy
+            }
             hexagon(
                     Point(offsetX, offsetY),
                     radius
