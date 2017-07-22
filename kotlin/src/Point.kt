@@ -25,6 +25,6 @@ operator fun Point.times(scale: Position) =
 
 fun Double.toPoint() =
         Point(
-                x = Math.sin(this),
-                y = Math.cos(this)
+                x = Math.cos(this),
+                y = Math.sin(this)
         )
