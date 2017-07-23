@@ -1,3 +1,5 @@
+package pkg
+
 import java.io.PrintWriter
 
 /**
@@ -22,7 +24,7 @@ fun PrintWriter.svg(width: String,
     println("""</svg>""")
 }
 
-fun PrintWriter.path(points: Sequence<Point>) {
+fun PrintWriter.path(points: Iterable<Point>) {
     val midPart = points.asSequence()
             .drop(1)
             .map { "L ${it.x} ${it.y}" }
@@ -33,16 +35,13 @@ fun PrintWriter.path(points: Sequence<Point>) {
     println("""<path d="$d" fill="none" stroke="blue"/>""")
 }
 
-fun PrintWriter.path(vararg points: Point) {
-    path(points.asSequence())
-}
-
 fun PrintWriter.hexagon(center: Point,
                         radius: Position,
                         rotate: Double = 0.0) {
     val points = generateSequence(rotate) { it + Math.PI / 3 }
             .map { it.toPoint() * radius + center }
             .take(6)
+            .asIterable()
 
     path(points)
 }
@@ -64,7 +63,7 @@ fun PrintWriter.tileWithHexagons(offset: Point,
                 offsetY += dy
             }
             hexagon(
-                    Point(offsetX, offsetY),
+                    offsetX to offsetY,
                     radius
             )
         }
