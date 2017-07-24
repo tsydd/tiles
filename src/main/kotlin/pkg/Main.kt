@@ -14,7 +14,9 @@ fun main(args: Array<String>) {
                     height = "55cm",
                     viewbox = "0 0 320 550") {
                 flat.render(it)
-                tiledArea(40, 20)
+                tiledArea(40, 40)
+//                        .rotate(ZERO, Math.PI / 2)
+//                        .mirrorX(0.0)
                         .mirrorY((B + D + F) / 2)
                         .render(it)
             }
